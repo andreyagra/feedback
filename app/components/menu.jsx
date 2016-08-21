@@ -11,7 +11,10 @@ import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
 import { Link } from 'react-router';
 
 @connect((state) => ({
-  bellNotify: state.bellNotify,
+  valueBellNotify: state.bellNotify.valueBellNotify,
+  qtdNotify: state.bellNotify.qtdNotify,
+  warnings: state.bellNotify.warnings,
+  responses: state.bellNotify.responses,
 }))
 export default class Menu extends React.Component {
 
@@ -21,7 +24,18 @@ export default class Menu extends React.Component {
 
   state = {
     open: false,
+    openBellNotify: false,
   }
+
+  handleTouchTapBellNotify = (event) => {
+    event.preventDefault();
+    if (!this.props.valueBellNotify)
+      return ;
+    this.setState({
+      openBellNotify: true,
+      anchorElBellNotify: event.currentTarget,
+    });
+  };
 
   handleTouchTap = (event) => {
     event.preventDefault();
@@ -36,6 +50,12 @@ export default class Menu extends React.Component {
       open: false,
     });
   };
+  handleRequestCloseBellNotify = () => {
+    this.setState({
+      openBellNotify: false,
+    });
+  };
+
 
   configureStyles = () => {
     const styles = {
@@ -60,6 +80,9 @@ export default class Menu extends React.Component {
 
   render() {
     const styles = this.configureStyles();
+    const textBellNotify = `${this.props.qtdNotify} new invites`;
+    const textWarnings = `${this.props.warnings} new warnings`;
+    const textResponses = `${this.props.responses} new responses`;
 
     return (
       <Toolbar style={styles.global} className="feedbacks-menu">
@@ -113,9 +136,23 @@ export default class Menu extends React.Component {
           <div style={styles.bellStyle} className="mdl-layout--small-screen-only">
             <Link to={'/invites'}>
               <IconButton
+                onTouchTap={this.handleTouchTapBellNotify}
                 style={styles.buttonStyle}
-                iconClassName="fa fa-bell-o"
-              />
+                iconStyle={styles.iconStyle}
+                iconClassName={this.props.valueBellNotify ?  "fa fa-bell" : "fa fa-bell-o"}>
+                  <Popover
+                    open={this.state.openBellNotify}
+                    anchorEl={this.state.anchorElBellNotify}
+                    onTouchTap={this.handleRequestCloseBellNotify}
+                    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                    onRequestClose={this.handleRequestCloseBellNotify}>
+                      <MenuUI>
+                        <MenuItem primaryText={textBellNotify}/>
+                        <MenuItem primaryText={textWarnings}/>
+                        <MenuItem primaryText={textResponses}/>
+                      </MenuUI>
+                  </Popover>
+              </IconButton>
             </Link>
           </div>
         </ToolbarGroup>

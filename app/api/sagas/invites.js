@@ -4,6 +4,7 @@ import { call, put } from 'redux-saga/effects';
 
 import { INVITES, actions } from 'api/actions';
 
+
 function fetchList(id) {
   const url = (id) ? `/invites/${id}.json` : '/invites.json';
   return fetch(url)
@@ -15,6 +16,7 @@ function* fetchInvites(action) {
   const nextAction = actions(INVITES);
   try {
     const list = yield call(fetchList, action.payload.id);
+
     yield put(nextAction.success(list));
   } catch (e) {
     yield put(nextAction.failure({ message: e.message }));
@@ -38,8 +40,10 @@ function save(payload) {
 
 function* updateInvite(action) {
   const nextAction = actions(INVITES);
+  
   try {
     const invite = yield call(save, action.payload);
+
     yield put(nextAction.success({
       invite,
       operation: 'filter',

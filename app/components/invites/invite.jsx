@@ -20,6 +20,8 @@ class Invite extends React.Component {
     const el = ev.currentTarget.name;
     params[el] = value;
     this.props.dispatch({ type: INVITES.SAVE, payload: params });
+    //TODO - Disparar o saga em qualquer PUT que houver para o servidor
+    this.props.dispatch({ type: 'getStatus' });
   }
 
   formatStatus = (invite) => {
