@@ -12,6 +12,7 @@ import passportConfig from './config/passport';
 import Users from './routers/users';
 import Invites from './routers/invites';
 import Feedbacks from './routers/feedbacks';
+import Status from './routers/status'
 
 // const csrfProtection = csurf({ cookie: true });
 const app = express();
@@ -24,6 +25,7 @@ passportConfig(express, app, models);
 new Users(app, models);
 new Invites(app, models);
 new Feedbacks(app, models);
+new Status(app, models);
 
 const manifest = path.resolve(path.join('public', 'assets', 'offline.appcache'));
 app.get('/offline.appcache', (req, res) => {
