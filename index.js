@@ -30,6 +30,20 @@ app.get('/offline.appcache', (req, res) => {
   res.send(fs.readFileSync(manifest));
 });
 
+app.get('/ajax', (req, res) => {
+  res.send([
+    {
+      name: 'Milfont',
+      email: 'cmilfont@gmail.com' 
+    },
+    {
+      name: 'Teste',
+      email: 'teste@milfont.org'
+    }
+
+    ]);
+});
+
 app.get('/*', (req, res) => {
   const user = req.user;
   const flashs = req.flash();

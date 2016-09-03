@@ -5,7 +5,7 @@ const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 export default (express, app, models) => {
 
-  passport.use(new GoogleStrategy({
+/*  passport.use(new GoogleStrategy({
     clientID: GLOBAL.Config.clientID,
     clientSecret: GLOBAL.Config.clientSecret,
     callbackURL: `${GLOBAL.Config.url}/auth/google/callback`,
@@ -28,7 +28,7 @@ export default (express, app, models) => {
       user.save(defaults).then(saved => done(null, saved))
     });
   }));
-
+*/
   passport.use(new Strategy(
     { passReqToCallback: true },
     (req, username, password, done) => {

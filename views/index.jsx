@@ -1,6 +1,6 @@
 import React from 'react';
 import Default from './default';
-import Landing from './landing';
+//import Landing from './landing';
 import SinglePageApplication from './spa';
 
 export default class Index extends React.Component {
@@ -12,8 +12,10 @@ export default class Index extends React.Component {
       console.log("User.id", user.id);
     }
 
-    const page = (user) ?
-      <SinglePageApplication {...this.props} /> : <Landing {...this.props} />;
+    const page =  <SinglePageApplication {...this.props} />;
+
+//    const page = (user) ?
+  //    <SinglePageApplication {...this.props} /> : <Landing {...this.props} />;
 
     return (
       <Default csrfToken={csrfToken}>
